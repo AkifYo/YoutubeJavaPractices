@@ -107,15 +107,16 @@ public class Teachers_Menu implements Functions{
         if (!(teachersList.isEmpty())){
             System.out.println("Type the id number to be deleted");
             String idNoToDelete= scan.next();
-            for (Teacher each:teachersList    ) {
-                if (each.getIdNumber().equalsIgnoreCase(idNoToDelete)){
-                    teachersList.remove(each);
-                    System.out.println(teachersList.toString());
-                } else {
-                    System.out.println("There is no id number to delete");
+            for (int i = 0; i <teachersList.size(); i++) {
+                if (idNoToDelete.equals(teachersList.get(i).getIdNumber())){
+                    System.out.println(idNoToDelete+" is deleted");
+                    teachersList.remove(i);
+                    teachersMenu();
                 }
+
             }
             teachersMenu();
+
         } else {
 
             System.out.println("There is no student in the list");

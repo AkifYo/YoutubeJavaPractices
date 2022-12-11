@@ -1,6 +1,7 @@
 package P08_Mini_School_Project;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Scanner;
 
 public class Student_Menu implements Functions{
@@ -47,22 +48,25 @@ public class Student_Menu implements Functions{
         String userName= scan.nextLine();
 
         System.out.print("Please type your surname: ");
-
         String userSurname= scan.nextLine();
+
         System.out.print("Please type your Id Number: ");
-
         String idNo=scan.nextLine();
-        System.out.print("Please type your old: ");
 
+        System.out.print("Please type your old: ");
         int userOld= scan.nextInt();
+
         System.out.print("Please type your class name: ");
         scan.nextLine();
         String classesName= scan.nextLine();
+
         System.out.print("Please type your student number: ");
         int studentNo= scan.nextInt();
+
         Student student= new Student(userName,userSurname,idNo,userOld,classesName,studentNo);
+
         studentsList.add(student);
-        System.out.println(student.toString());
+        System.out.println(student);
         System.out.println("Succesfully registered...");
         studentMenu();
     }
@@ -75,7 +79,7 @@ public class Student_Menu implements Functions{
 
            for (int i = 0; i < studentsList.size(); i++) {
                if (studentsList.get(i).getIdNumber().equals(idNoToSearch)){
-                   System.out.println(studentsList.get(i));
+                   System.out.println(studentsList.get(i).toString());
                }
 
            }
@@ -92,7 +96,7 @@ public class Student_Menu implements Functions{
     public void listing() {
        if (!(studentsList.isEmpty())){
             for (Student each:studentsList    ) {
-                System.out.println(each.toString()+"============");
+                System.out.println(each.toString()+"\n============");
             }
             studentMenu();
         } else {
@@ -104,24 +108,22 @@ public class Student_Menu implements Functions{
     }
 
     @Override
-    public void delete() {
+    public void delete() throws ConcurrentModificationException {
         if (!(studentsList.isEmpty())){
             System.out.println("Type the id number to be deleted");
             String idNoToDelete= scan.next();
-            for (Student each:studentsList    ) {
-               if (each.getIdNumber().equalsIgnoreCase(idNoToDelete)){
-                   studentsList.remove(each);
-                   System.out.println(studentsList.toString());
-               } else {
-                   System.out.println("There is no id number to delete");
-               }
-            }
-            studentMenu();
+            for (int i = 0; i < studentsList.size(); i++) {
+                if (idNoToDelete.equals(studentsList.get(i).getIdNumber())){
+                    System.out.println(idNoToDelete + " is deleted");
+                    studentsList.remove(i);
+                    studentMenu();
+                }
+
+            }studentMenu();
         } else {
 
             System.out.println("There is no student in the list");
-            studentMenu();
-        }
+        } studentMenu();
 
     }
 
